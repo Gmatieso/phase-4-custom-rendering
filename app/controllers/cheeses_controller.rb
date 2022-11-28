@@ -10,11 +10,13 @@ class CheesesController < ApplicationController
   end
 
   # GET /cheeses/:id
-  # Before Taking advantage of some custom built-in-serialization
+  #Basic Error Messaging when Rendering JSON Data 
   def show
     cheese = Cheese.find_by(id: params[:id])
-    render json: cheese, except: [:created_at, :updated_at], methods: [:summary]
+    if cheese
+      render json: cheese, except: [:created_at, :updated_at], methods: [:summary]
+    else
+      render json: { error: 'Cheese not found' }
+    end
   end
-
-
 end
